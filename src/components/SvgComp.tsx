@@ -1,64 +1,53 @@
 import {spline} from '@georgedoescode/spline';
-import {SVG} from '@svgdotjs/svg.js';
-import {ISVGData} from "../models/SVGStore";
-import { observer } from 'mobx-react';
 import './SvgComp.css';
+import {forwardRef} from "react";
 
-
-
-function random(min: number, max: number, float = false) {
-    const val = Math.random() * (max - min) + min;
-
-    if (float) {
-        return val;
-    }
-
-    return Math.floor(val);
-}
-
-interface SvgCompProps {
-    item: ISVGData,
+interface BaseProps extends React.HtmlHTMLAttributes<HTMLElement>{
+    numberOfDots: number,
+    pull: number,
     width: number,
-    height: number
+    height: number,
+    size: number
 }
 
+export type SvgCompProps =
+    | BaseProps
 
-const SvgComp: React.FC<SvgCompProps> = observer((props: SvgCompProps) => {
+export const SvgComp = forwardRef<SVGSVGElement, SvgCompProps>(function SvgComp(
+    props,
+    ref
+) {
+    const {numberOfDots, pull, width, height, size, ...rootDOMAttributes} = props;
 
-    const {item, width, height} = props;
 
+    const angleStep = (Math.PI * 2) / numberOfDots;
+    const x = width / 2;
+    const y = height / 2;
+    const points = [];
 
-    const makeSVG = (dom: HTMLDivElement|null) => {
-        if(dom) {
-            const svg = SVG().addTo(dom).viewbox(0,0,width, height);
-            const size = random(50, 80);
-            const angleStep = (Math.PI * 2) / item.numberOfDots;
-            const x = width / 2;
-            const y = height / 2;
-            const points = [];
+    for (let i = 1; i <= numberOfDots; i++) {
+        // x & y coordinates of the current point
+        const x1 = x + Math.cos(i * angleStep) * (size * pull);
+        const y1 = y + Math.sin(i * angleStep) * (size * pull);
 
-            for (let i = 1; i <= item.numberOfDots; i++) {
-                // x & y coordinates of the current point
-                const x1 = x + Math.cos(i * angleStep) * (size * item.pull);
-                const y1 = y + Math.sin(i * angleStep) * (size * item.pull);
-
-                // push the point to the points array
-                points.push({ x: x1, y: y1 });
-            }
-            const pathData = spline(points, 1, true);
-            svg
-                .path(pathData)
-                .stroke({
-                    width: 2,
-                    color: '#000'
-                })
-                .fill('transparent');
-        }
-
+        // push the point to the points array
+        points.push({ x: x1, y: y1 });
     }
+    const pathData = spline(points, 1, true);
 
     return (
-        <div className="svgContainer" ref={ref => makeSVG(ref)}/>
+        <div className="svgContainer" {...rootDOMAttributes}>
+            <svg
+                ref={ref}
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.1"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox={`0 0 ${width} ${height}`}>
+                <circle cx={width/2} cy={width/2} r={width/2} fill="red"/>
+                <path d={pathData} strokeWidth="0" stroke="#00000"
+                      fill="#381922"/>
+            </svg>
+        </div>
     );
 });
 

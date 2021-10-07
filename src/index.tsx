@@ -5,19 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider, rootStore} from "./models/Root";
 
-function random(min: number, max: number, float = false) {
-    const val = Math.random() * (max - min) + min;
 
-    if (float) {
-        return val;
-    }
-
-    return Math.floor(val);
-}
-for(let i = 0; i < 1024; i++){
-    rootStore.svgstore.addItem(random(3,12),random(0.55, 1, true));
-}
-
+rootStore.svgstore.addRandomItems(1024);
 
 ReactDOM.render(
     <React.StrictMode>

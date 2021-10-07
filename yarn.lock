@@ -1587,11 +1587,6 @@
     ejs "^2.6.1"
     magic-string "^0.25.0"
 
-"@svgdotjs/svg.js@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.nlark.com/@svgdotjs/svg.js/download/@svgdotjs/svg.js-3.1.1.tgz#3cf6a59e6d8708cd76d38b26e7d682dacb2f3670"
-  integrity sha1-PPalnm2HCM1204sm59aC2ssvNnA=
-
 "@svgr/babel-plugin-add-jsx-attribute@^5.4.0":
   version "5.4.0"
   resolved "https://registry.nlark.com/@svgr/babel-plugin-add-jsx-attribute/download/@svgr/babel-plugin-add-jsx-attribute-5.4.0.tgz#81ef61947bb268eb9d50523446f9c638fb355906"
