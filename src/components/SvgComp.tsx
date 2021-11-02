@@ -36,7 +36,7 @@ export const SvgComp = forwardRef<SVGSVGElement, SvgCompProps>(function SvgComp(
     const pathData = spline(points, 1, true);
 
     return (
-        <div className="svgContainer" {...rootDOMAttributes}>
+        <div {...rootDOMAttributes}>
             <svg
                 ref={ref}
                 xmlns="http://www.w3.org/2000/svg"

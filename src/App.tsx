@@ -1,31 +1,32 @@
 import React from 'react';
-import './App.css';
+// import './App.css';
 import {useMst} from "./models/Root";
-import SvgComp from "./components/SvgComp";
+// import SvgComp from "./components/SvgComp";
 import {ISVGData, SVGData} from "./models/SVGStore";
-import {observer} from "mobx-react";
-
+// import {observer} from "mobx-react";
+import {
+  // LayersControl,
+  MapContainer,
+  // LayerGroup,
+  TileLayer,
+  // SVGOverlay
+} from "react-leaflet";
+import Grid from "./CirclesLayer";
+// import "leaflet/dist/leaflet.css";
 
 function App() {
 
-    const {svgstore} = useMst();
-
-    const handleClick = (item: ISVGData) => {
-        item.randomize();
-    }
-
     return (
-        <div className="App">
-            <div className="svgCompsCont">
-                {svgstore.items.map((item: any, index) => {
-                    return (
-                        <SvgComp onDoubleClick={() => handleClick(item)} key={index} size={item.size}
-                                 numberOfDots={item.numberOfDots} pull={item.pull} width={250} height={250}/>
-                    )
-                })}
-            </div>
-        </div>
+                <MapContainer
+                  style={{ height: "700px" }}
+                  scrollWheelZoom={false}
+                  center={[0, 0]}
+                  zoom={5}
+                  maxZoom={5}
+                >
+                    <Grid />
+                </MapContainer>
     );
 }
 
-export default observer(App);
+export default App;
