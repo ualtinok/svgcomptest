@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {Provider, rootStore} from "./models/Root";
 
 
-rootStore.svgstore.addRandomItems(1024);
+rootStore.svgstore.addRandomItems(256);
 
 ReactDOM.render(
     <React.StrictMode>

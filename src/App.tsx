@@ -13,6 +13,8 @@ import {
 } from "react-leaflet";
 import Grid from "./CirclesLayer";
 // import "leaflet/dist/leaflet.css";
+// @ts-ignore
+import L from 'leaflet';
 
 function App() {
 
@@ -21,8 +23,9 @@ function App() {
                   style={{ height: "700px" }}
                   scrollWheelZoom={false}
                   center={[0, 0]}
-                  zoom={5}
-                  maxZoom={5}
+                  zoom={4}
+                  maxZoom={4}
+                  crs={L.CRS.Simple}
                 >
                     <Grid />
                 </MapContainer>
