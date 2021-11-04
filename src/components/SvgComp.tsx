@@ -7,7 +7,8 @@ interface BaseProps extends React.HtmlHTMLAttributes<HTMLElement>{
     pull: number,
     width: number,
     height: number,
-    size: number
+    size: number,
+    label: string
 }
 
 export type SvgCompProps =
@@ -17,7 +18,7 @@ export const SvgComp = forwardRef<SVGSVGElement, SvgCompProps>(function SvgComp(
     props,
     ref
 ) {
-    const {numberOfDots, pull, width, height, size, ...rootDOMAttributes} = props;
+    const {numberOfDots, pull, width, height, size, label, ...rootDOMAttributes} = props;
 
 
     const angleStep = (Math.PI * 2) / numberOfDots;
@@ -46,6 +47,7 @@ export const SvgComp = forwardRef<SVGSVGElement, SvgCompProps>(function SvgComp(
                 <circle cx={width/2} cy={width/2} r={width/2} fill="red"/>
                 <path d={pathData} strokeWidth="0" stroke="#00000"
                       fill="#381922"/>
+                <text x={width/2} y={width/2}>{label}</text>
             </svg>
         </div>
     );

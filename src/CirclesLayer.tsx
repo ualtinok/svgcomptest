@@ -44,11 +44,12 @@ const RenderCircles = (props: any) => {
     const dimensionDividedBy = 2**(5-z);
   return (
     <React.Fragment>
-    {rootStore.svgstore.items.slice(0, numberOfEls).map((svg) => (
+    {rootStore.svgstore.items.slice(0, numberOfEls).map((svg, K) => (
     <SvgComp
       size={svg.size/dimensionDividedBy}
       numberOfDots={svg.numberOfDots}
       pull={1}
+      label={svg.id.toString()}
       width={200/dimensionDividedBy}
       height={200/dimensionDividedBy}
       style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%'}}
@@ -88,7 +89,7 @@ const createCirclesLayer = (props, context) => {
 
 // @ts-ignore
 const updateCirclesLayer = (instance, props, prevProps) => {
-    
+
 }
 
 const CirclesLayer = createLayerComponent(createCirclesLayer, updateCirclesLayer);

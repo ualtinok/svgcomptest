@@ -15,6 +15,7 @@ function random(min: number, max: number, float = false) {
 
 export const SVGData = types
     .model({
+        id: types.number,
         numberOfDots: types.number,
         pull: types.number,
         size: types.number,
@@ -33,6 +34,7 @@ export const SVGStore = types
         addRandomItems(howMany: number) {
             for(let i = 0; i < howMany; i++) {
                 self.items.push({
+                    id: i,
                     numberOfDots: random(3, 5),
                     pull: random(0.55, 1, true),
                     size: random(50, 80)
