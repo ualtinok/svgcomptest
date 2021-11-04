@@ -49,9 +49,9 @@ const RenderCircles = (props: any) => {
     let x = props.coords.x;
     let y = props.coords.y;
     // console.log(z);
-    const numberOfEls = 2**(8-(2*z));
+    const numberOfEls = 2**(6-(2*z));
     // console.log(numberOfEls);
-    const dimensionDividedBy = 2**(4-z);
+    const dimensionDividedBy = 2**(3-z);
     while (x < 0) {
       x += 16
     }
@@ -69,9 +69,9 @@ const RenderCircles = (props: any) => {
           numberOfDots={svg.numberOfDots}
           pull={1}
           label={svg.id.toString()}
-          width={200/dimensionDividedBy}
-          height={200/dimensionDividedBy}
-          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%'}}
+          width={256/dimensionDividedBy}
+          height={256/dimensionDividedBy}
+          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%', height: 256/dimensionDividedBy}}
         />
       ))
     )}

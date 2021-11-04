@@ -21,10 +21,10 @@ function App() {
     return (
                 <MapContainer
                   style={{ height: "700px" }}
-                  scrollWheelZoom={false}
+                  scrollWheelZoom={true}
                   center={[0, 0]}
-                  zoom={4}
-                  maxZoom={4}
+                  zoom={3}
+                  maxZoom={3}
                   crs={L.CRS.Simple}
                 >
                     <Grid />
