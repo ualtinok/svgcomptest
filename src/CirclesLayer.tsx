@@ -44,22 +44,10 @@ class _Array<T> extends Array<T> {
 }
 
 
-const RenderCircles = (props: any) => {
-    const z = props.coords.z;
-    let x = props.coords.x;
-    let y = props.coords.y;
-    // console.log(z);
-    const numberOfEls = 2**(8-(2*z));
-    // console.log(numberOfEls);
-    const dimensionDividedBy = 2**(4-z);
-    while (x < 0) {
-      x += 16
-    }
-    while (y < 0) {
-      y += 16
-    }
-    const startPos = ((x*dimensionDividedBy)%16) + 16*((y*dimensionDividedBy)%16);
-    console.log(x, y, startPos)
+const RenderCircles = React.memo((props: any) => {
+  const startPos = props.startPos;
+  const dimensionDividedBy = props.dimensionDividedBy;
+  const numberOfEls = props.numberOfEls;
   return (
     <React.Fragment>
     {_Array.range(0, dimensionDividedBy - 1, 1).map(l =>
@@ -69,15 +57,15 @@ const RenderCircles = (props: any) => {
           numberOfDots={svg.numberOfDots}
           pull={1}
           label={svg.id.toString()}
-          width={200/dimensionDividedBy}
-          height={200/dimensionDividedBy}
-          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%'}}
+          width={256/dimensionDividedBy}
+          height={256/dimensionDividedBy}
+          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%', height: 256/dimensionDividedBy}}
         />
       ))
     )}
     </React.Fragment>
     );
-};
+});
 
 // @see https://stackoverflow.com/a/65713838/4295853
 // @ts-ignore
@@ -85,7 +73,23 @@ L.GridLayer.Circles = L.GridLayer.extend({
     createTile: function(coords: L.Coords) {
         var tile = document.createElement('div');
         console.log(coords);
-        tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles coords={coords} />);
+        const z = coords.z;
+        let x = coords.x;
+        let y = coords.y;
+        // console.log(z);
+        const numberOfEls = 2**(6-(2*z));
+        // console.log(numberOfEls);
+        const dimensionDividedBy = 2**(3-z);
+        while (x < 0) {
+          x += 16
+        }
+        while (y < 0) {
+          y += 16
+        }
+        const startPos = ((x*dimensionDividedBy)%16) + 16*((y*dimensionDividedBy)%16);
+        console.log(x, y, startPos)
+        tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles
+          startPos={startPos} numberOfEls={numberOfEls} dimensionDividedBy={dimensionDividedBy} />);
         // tile.style.outline = '1px solid red';
         tile.style.display = 'flex';
         tile.style['flexWrap'] = 'wrap';
