@@ -47,7 +47,7 @@ export const SvgComp = forwardRef<SVGSVGElement, SvgCompProps>(function SvgComp(
                 <circle cx={width/2} cy={width/2} r={width/2} fill="red"/>
                 <path d={pathData} strokeWidth="0" stroke="#00000"
                       fill="#381922"/>
-                <text x={width/2} y={width/2}>{label}</text>
+                <text x={width/2} y={height/2}>{label}</text>
             </svg>
         </div>
     );

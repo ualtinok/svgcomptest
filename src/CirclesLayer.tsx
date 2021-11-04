@@ -35,26 +35,46 @@ const svgData = [
     pull: 2
   }
 ];
+class _Array<T> extends Array<T> {
+  static range(from: number, to: number, step: number): number[] {
+    return Array.from(Array(Math.floor((to - from) / step) + 1)).map(
+      (v, k) => from + k * step
+    );
+  }
+}
+
 
 const RenderCircles = (props: any) => {
     const z = props.coords.z;
+    let x = props.coords.x;
+    let y = props.coords.y;
     // console.log(z);
-    const numberOfEls = 2**(10-(2*z));
-    console.log(numberOfEls);
-    const dimensionDividedBy = 2**(5-z);
+    const numberOfEls = 2**(8-(2*z));
+    // console.log(numberOfEls);
+    const dimensionDividedBy = 2**(4-z);
+    while (x < 0) {
+      x += 16
+    }
+    while (y < 0) {
+      y += 16
+    }
+    const startPos = ((x*dimensionDividedBy)%16) + 16*((y*dimensionDividedBy)%16);
+    console.log(x, y, startPos)
   return (
     <React.Fragment>
-    {rootStore.svgstore.items.slice(0, numberOfEls).map((svg, K) => (
-    <SvgComp
-      size={svg.size/dimensionDividedBy}
-      numberOfDots={svg.numberOfDots}
-      pull={1}
-      label={svg.id.toString()}
-      width={200/dimensionDividedBy}
-      height={200/dimensionDividedBy}
-      style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%'}}
-    />
-  ))}
+    {_Array.range(0, dimensionDividedBy - 1, 1).map(l =>
+      rootStore.svgstore.items.slice(startPos + l*16, startPos + l*16 + dimensionDividedBy).map((svg, K) => (
+        <SvgComp
+          size={svg.size/dimensionDividedBy}
+          numberOfDots={svg.numberOfDots}
+          pull={1}
+          label={svg.id.toString()}
+          width={200/dimensionDividedBy}
+          height={200/dimensionDividedBy}
+          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%'}}
+        />
+      ))
+    )}
     </React.Fragment>
     );
 };
