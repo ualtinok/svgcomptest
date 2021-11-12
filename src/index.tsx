@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Provider, rootStore} from "./models/Root";
+import {Provider, rootStore, SIDE_LENGTH} from "./models/Root";
 
 
-rootStore.svgstore.addRandomItems(256);
+rootStore.svgstore.addRandomItems(SIDE_LENGTH*SIDE_LENGTH);
 
 ReactDOM.render(
     <React.StrictMode>

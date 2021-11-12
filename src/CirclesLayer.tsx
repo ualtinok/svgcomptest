@@ -6,7 +6,7 @@ import { createLayerComponent } from "@react-leaflet/core";
 import SvgComp from "./components/SvgComp";
 import ReactDOMServer from "react-dom/server";
 import ReactDOM from "react-dom";
-import {rootStore} from "./models/Root";
+import {rootStore, SIDE_LENGTH, MARGIN_CIRCLES} from "./models/Root";
 
 
 const svgData = [
@@ -43,7 +43,6 @@ class _Array<T> extends Array<T> {
   }
 }
 
-
 const RenderCircles = React.memo((props: any) => {
   const startPos = props.startPos;
   const dimensionDividedBy = props.dimensionDividedBy;
@@ -51,15 +50,18 @@ const RenderCircles = React.memo((props: any) => {
   return (
     <React.Fragment>
     {_Array.range(0, dimensionDividedBy - 1, 1).map(l =>
-      rootStore.svgstore.items.slice(startPos + l*16, startPos + l*16 + dimensionDividedBy).map((svg, K) => (
+      rootStore.svgstore.items.slice(startPos + l*SIDE_LENGTH, startPos + l*SIDE_LENGTH + dimensionDividedBy).map((svg, K) => (
         <SvgComp
           size={svg.size/dimensionDividedBy}
           numberOfDots={svg.numberOfDots}
           pull={1}
           label={svg.id.toString()}
-          width={256/dimensionDividedBy}
-          height={256/dimensionDividedBy}
-          style={{flex: '1 0 ' + (100/dimensionDividedBy) + '%', height: 256/dimensionDividedBy}}
+          width={(256-(MARGIN_CIRCLES*2))/dimensionDividedBy}
+          height={(256-(MARGIN_CIRCLES*2))/dimensionDividedBy}
+          style={{
+          padding: MARGIN_CIRCLES/dimensionDividedBy,
+          height: (256-(MARGIN_CIRCLES*2))/dimensionDividedBy,
+          width: (256-(MARGIN_CIRCLES*2))/dimensionDividedBy}}
         />
       ))
     )}
@@ -76,17 +78,18 @@ L.GridLayer.Circles = L.GridLayer.extend({
         const z = coords.z;
         let x = coords.x;
         let y = coords.y;
-        // console.log(z);
+        console.log(z);
+        let pow = Math.log2(SIDE_LENGTH);
         const numberOfEls = 2**(6-(2*z));
         // console.log(numberOfEls);
         const dimensionDividedBy = 2**(3-z);
         while (x < 0) {
-          x += 16
+          x += SIDE_LENGTH
         }
         while (y < 0) {
-          y += 16
+          y += SIDE_LENGTH
         }
-        const startPos = ((x*dimensionDividedBy)%16) + 16*((y*dimensionDividedBy)%16);
+        const startPos = ((x*dimensionDividedBy)%SIDE_LENGTH) + SIDE_LENGTH*((y*dimensionDividedBy)%SIDE_LENGTH);
         console.log(x, y, startPos)
         tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles
           startPos={startPos} numberOfEls={numberOfEls} dimensionDividedBy={dimensionDividedBy} />);
