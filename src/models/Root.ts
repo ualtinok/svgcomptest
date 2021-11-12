@@ -12,6 +12,9 @@ let initialState = RootModel.create({
 
 export const rootStore = initialState;
 
+export const SIDE_LENGTH = 32;
+export const MARGIN_CIRCLES = 10;
+
 export type RootInstance = Instance<typeof RootModel>;
 const RootStoreContext = createContext<null | RootInstance>(null);
 
