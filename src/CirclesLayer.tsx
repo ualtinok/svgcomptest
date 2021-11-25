@@ -46,23 +46,15 @@ class _Array<T> extends Array<T> {
 const RenderCircles = React.memo((props: any) => {
   const startPos = props.startPos;
   const dimensionDividedBy = props.dimensionDividedBy;
-  const numberOfEls = props.numberOfEls;
   return (
     <React.Fragment>
     {_Array.range(0, dimensionDividedBy - 1, 1).map(l =>
-      rootStore.svgstore.items.slice(startPos + l*SIDE_LENGTH, startPos + l*SIDE_LENGTH + dimensionDividedBy).map((svg, K) => (
-        <SvgComp
-          size={svg.size/dimensionDividedBy}
-          numberOfDots={svg.numberOfDots}
-          pull={1}
-          label={svg.id.toString()}
-          width={(256-(MARGIN_CIRCLES*2))/dimensionDividedBy}
-          height={(256-(MARGIN_CIRCLES*2))/dimensionDividedBy}
-          style={{
-          padding: MARGIN_CIRCLES/dimensionDividedBy,
-          height: (256-(MARGIN_CIRCLES*2))/dimensionDividedBy,
-          width: (256-(MARGIN_CIRCLES*2))/dimensionDividedBy}}
-        />
+      rootStore.svgstore.items.slice(startPos + l*SIDE_LENGTH, startPos + l*SIDE_LENGTH + dimensionDividedBy).map((svg) => (
+        <img src={"http://localhost:3000?margin=" + MARGIN_CIRCLES +
+        "&dimensionDividedBy=" + dimensionDividedBy +
+        "&nDots=" + svg.numberOfDots +
+        "&size=" + svg.size +
+        "&label=" + svg.id.toString()} />
       ))
     )}
     </React.Fragment>
@@ -80,7 +72,6 @@ L.GridLayer.Circles = L.GridLayer.extend({
         let y = coords.y;
         console.log(z);
         let pow = Math.log2(SIDE_LENGTH);
-        const numberOfEls = 2**(6-(2*z));
         // console.log(numberOfEls);
         const dimensionDividedBy = 2**(3-z);
         while (x < 0) {
@@ -92,11 +83,13 @@ L.GridLayer.Circles = L.GridLayer.extend({
         const startPos = ((x*dimensionDividedBy)%SIDE_LENGTH) + SIDE_LENGTH*((y*dimensionDividedBy)%SIDE_LENGTH);
         console.log(x, y, startPos)
         tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles
-          startPos={startPos} numberOfEls={numberOfEls} dimensionDividedBy={dimensionDividedBy} />);
+          startPos={startPos} dimensionDividedBy={dimensionDividedBy} />);
         // tile.style.outline = '1px solid red';
         tile.style.display = 'flex';
         tile.style['flexWrap'] = 'wrap';
         tile.style['flexDirection'] = 'row';
+        // var tile = document.createElement('img');
+        // tile.src = 'http://localhost:3000?margin=0&dimensionDividedBy='
         return tile;
     },
 });
