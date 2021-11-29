@@ -65,31 +65,32 @@ const RenderCircles = React.memo((props: any) => {
 // @ts-ignore
 L.GridLayer.Circles = L.GridLayer.extend({
     createTile: function(coords: L.Coords) {
-        var tile = document.createElement('div');
-        console.log(coords);
-        const z = coords.z;
-        let x = coords.x;
-        let y = coords.y;
-        console.log(z);
-        let pow = Math.log2(SIDE_LENGTH);
-        // console.log(numberOfEls);
-        const dimensionDividedBy = 2**(3-z);
-        while (x < 0) {
-          x += SIDE_LENGTH
-        }
-        while (y < 0) {
-          y += SIDE_LENGTH
-        }
-        const startPos = ((x*dimensionDividedBy)%SIDE_LENGTH) + SIDE_LENGTH*((y*dimensionDividedBy)%SIDE_LENGTH);
-        console.log(x, y, startPos)
-        tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles
-          startPos={startPos} dimensionDividedBy={dimensionDividedBy} />);
-        // tile.style.outline = '1px solid red';
-        tile.style.display = 'flex';
-        tile.style['flexWrap'] = 'wrap';
-        tile.style['flexDirection'] = 'row';
-        // var tile = document.createElement('img');
-        // tile.src = 'http://localhost:3000?margin=0&dimensionDividedBy='
+        // var tile = document.createElement('div');
+        // console.log(coords);
+        // const z = coords.z;
+        // let x = coords.x;
+        // let y = coords.y;
+        // console.log(z);
+        // let pow = Math.log2(SIDE_LENGTH);
+        // // console.log(numberOfEls);
+        // const dimensionDividedBy = 2**(3-z);
+        // while (x < 0) {
+        //   x += SIDE_LENGTH
+        // }
+        // while (y < 0) {
+        //   y += SIDE_LENGTH
+        // }
+        // const startPos = ((x*dimensionDividedBy)%SIDE_LENGTH) + SIDE_LENGTH*((y*dimensionDividedBy)%SIDE_LENGTH);
+        // console.log(x, y, startPos)
+        // tile.innerHTML = ReactDOMServer.renderToString(<RenderCircles
+        //   startPos={startPos} dimensionDividedBy={dimensionDividedBy} />);
+        // // tile.style.outline = '1px solid red';
+        // tile.style.display = 'flex';
+        // tile.style['flexWrap'] = 'wrap';
+        // tile.style['flexDirection'] = 'row';
+        var tile = document.createElement('img');
+        tile.src = 'http://localhost:3001?x=' + coords.x +
+          '&y=' + coords.y + '&z=' + coords.z;
         return tile;
     },
 });
